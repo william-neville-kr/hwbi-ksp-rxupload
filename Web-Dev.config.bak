@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  http://go.microsoft.com/fwlink/?LinkId=169433
+  -->
+<configuration>
+   <configSections>
+      <!-- Modules to remove parent portal. can be removed if this is a standalone-->
+      <remove name="elmah" />
+      <remove name="log4net" />
+  </configSections>
+  <system.web>
+    <compilation targetFramework="4.5.2">
+      <assemblies>
+        <add assembly="System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A" />
+        <add assembly="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089" />
+      </assemblies>
+    </compilation>
+    <customErrors mode="RemoteOnly" />
+    <httpRuntime maxRequestLength="12288" targetFramework="4.5.2" />
+  </system.web>
+  <system.webServer>
+    <modules runAllManagedModulesForAllRequests="false">
+     <!-- Modules to remove parent portal. can be removed if this is a standalone-->
+     <remove name="ErrorLog" />
+     <remove name="ErrorMail" />
+     <remove name="ErrorLog" />
+     <remove name="UrlRoutingModule" />
+     <remove name="ApplicationInsights" />
+    </modules>
+    <httpProtocol>
+      <customHeaders>
+        <!-- Lets hardnen our response headers, should be for full site, but we don't own all code where this will deploy -->
+        <add name="Content-Security-Policy" value="default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self'; font-src 'self';" />
+        <add name="X-Content-Type-Options" value="nosniff" />
+        <add name="X-Xss-Protection" value="1; mode=block" />
+        <add name="X-Frame-Options" value="SAMEORIGIN" />
+        <add name="Strict-Transport-Security" value="max-age=31536000; includeSubdomains" />
+        <add name="Cache-Control" value="no-cache, no-store, must-revalidate" />
+        <add name="Pragma" value="no-cache" />
+        <add name="Expires" value="0" />
+      </customHeaders>
+    </httpProtocol>
+    <staticContent>
+      <!-- Needed to fix IIS not knowing about woff files by default-->
+    <remove fileExtension=".eot" />
+    <mimeMap fileExtension=".eot" mimeType="application/vnd.ms-fontobject" />
+    <remove fileExtension=".woff" />
+    <mimeMap fileExtension=".woff" mimeType="application/x-font-woff" />
+    <remove fileExtension=".woff2" />
+    <mimeMap fileExtension=".woff2" mimeType="application/font-woff2" />
+    <remove fileExtension=".ttf" />
+    <mimeMap fileExtension=".ttf" mimeType="application/x-font-truetype" />
+    <remove fileExtension=".svg" />
+    <mimeMap fileExtension=".svg" mimeType="image/svg+xml" />
+    <remove fileExtension=".otf" />
+    <mimeMap fileExtension=".otf" mimeType="application/x-font-opentype" />
+    </staticContent>
+  </system.webServer>
+  <appSettings>
+    <add key="BaseDir" value="E:\\Data\\" />
+    <add key="AcceptedFileTypes" value="PDF,DOC,DOCX,XLSX,XLS,JPG,JPEG,TIFF,PNG,GIF,TIF" />
+    <!--Note these for server side, so client side also needs these also need set in krmulti.js -->
+    <add key="MaxFileSize" value="5120000" />
+    <!--Note these for server side, so client side also needs these also need set in krmulti.js -->
+    <add key="MaxFiles" value="10" />
+    <!--Note these for server side, so client side also needs set in krmulti.js -->
+    <add key="MsgDropDir" value="C:\\Data\\Pickup\\" />
+    <!-- Note the format below is the template ID in Hex then add the filename format-->
+    <!-- Dev/Test box -->
+    <!-- Note Self signed Certs need imported into trust store-->
+    <!--
+    <add key="RightFaxAPIBaseURL" value="https://w2k12r2-0-1.kroger.com/rightfax/" />
+    <add key="RightFaxSenderCredentials" value="RXUPLOADER:123" />
+    <add key="CoverPageTemplate" value="^0000001.pcl" />
+    <add key="ToFaxNumber" value="666" />-->
+    <!-- Production box -->
+    <add key="RightFaxAPIBaseURL" value="https://N060FAXAPP31/rightfax/" />
+    <add key="RightFaxSenderCredentials" value="API_TEST_CALL:1234567" />
+    <add key="CoverPageTemplate" value="^0000011.doc" />
+    <!--<add key="ToFaxNumber" value="407-708-1839" />-->
+    <!-- ^^Test_Andy on Prod-->
+    <add key="ToFaxNumber" value="999-999-9999" />
+    <!-- ^^Prod CPR #-->
+  </appSettings>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="Newtonsoft.Json" publicKeyToken="30ad4fe6b2a6aeed" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-10.0.0.0" newVersion="10.0.0.0" />
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+</configuration>
+<!--ProjectGuid: {e374db66-d270-4866-847f-1a40ba6be581}-->

@@ -1,0 +1,64 @@
+﻿<%@ master language="C#" autoeventwireup="true" inherits="MasterPage, App_Web_zkdcw4wx" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="content/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="content/css/silk-icons-sprite.min.css" rel="stylesheet" />
+    <link href="content/css/extra.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form class="form-horizontal" id="Form1" method="post" runat="server" enctype="multipart/form-data">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-xs-9">
+                <div class="logoheader">
+                    <img class="image sitelogo" src="content/images/site-logo.png"/>
+                </div>
+
+                <div class="siteheader">
+                    <h2 class="text-info">
+                        <asp:Literal ID="PageTitle" runat="server" Text="<%$ Resources:LocalizedText, PageTitle %>"></asp:Literal>
+                    </h2>
+                    <span class="text-muted"><asp:Literal ID="PageDesc" runat="server" Text="<%$ Resources:LocalizedText, PageDescription %>" ></asp:Literal></span>
+                 </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="input-group" >
+                    <asp:ListBox ID="lstLocal" runat="server" AutoPostBack="False" CssClass="form-control input-sm" Rows="1">
+                        <asp:ListItem Value="en">English</asp:ListItem>
+                        <asp:ListItem Value="es">Español</asp:ListItem>
+                    </asp:ListBox>
+                    <span class="input-group-btn">
+                        <asp:Button CssClass="btn btn-sm btn-default" ID="btnLocal" runat="server" Text="<%$ Resources:LocalizedText, LangBtn %>" /> 
+                    </span>  
+                </div>         
+            </div>
+        </div>
+        <div>
+                <asp:ContentPlaceHolder id="myJumboTron" runat="server"></asp:ContentPlaceHolder>
+        </div>
+        <div>
+                <asp:ContentPlaceHolder id="Marketing" runat="server"></asp:ContentPlaceHolder>
+        </div>
+        
+      <footer class="footer">
+        <p>&copy; 2017 Kroger Specialty Pharmacy. All rights reserved.</p>
+      </footer>
+    </div>
+    <script src="scripts/jquery-3.1.1.min.js"></script>
+    <script src="scripts/bootstrap.min.js"></script>
+    <asp:ContentPlaceHolder ID="CustomScripts" runat="server"></asp:ContentPlaceHolder>
+
+
+    </form>
+
+
+</body>
+</html>
